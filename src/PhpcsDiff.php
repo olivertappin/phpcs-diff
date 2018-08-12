@@ -164,7 +164,6 @@ class PhpcsDiff
 
         $changedLinesPerFile = $this->getChangedLinesPerFile($files);
 
-
         if ($this->isVerbose) {
             $this->climate->comment('Comparing phpcs output with changes lines from git diff.');
         }
@@ -198,7 +197,7 @@ class PhpcsDiff
     protected function runPhpcs(array $files = [], $ruleset = 'ruleset.xml')
     {
         return json_decode(
-            shell_exec('./vendor/bin/phpcs --report=json --standard=' . $ruleset . ' ' . implode(' ', $files)),
+            shell_exec('vendor/bin/phpcs --report=json --standard=' . $ruleset . ' ' . implode(' ', $files)),
             true
         );
     }

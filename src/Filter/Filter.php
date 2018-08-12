@@ -53,14 +53,14 @@ class Filter
      */
     public function filter()
     {
-        foreach ($this->unfilteredData as $item) {
+        foreach ($this->unfilteredData as $key => $item) {
             foreach ($this->rules as $rule) {
                 try {
                     $rule($item);
                 } catch (RuleException $exception) {
-                    $this->contaminatedData[] = $item;
+                    $this->contaminatedData[$key] = $item;
                 }
-                $this->filteredData[] = $item;
+                $this->filteredData[$key] = $item;
             }
         }
 
