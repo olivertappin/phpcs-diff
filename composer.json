@@ -1,0 +1,24 @@
+{
+    "name": "phpcs-diff",
+    "description": "Detects violations of a defined coding standard based on a git diff.",
+    "require": {
+        "squizlabs/php_codesniffer": "*",
+        "league/climate": "^3.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpcsDiff\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpcsDiff\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
