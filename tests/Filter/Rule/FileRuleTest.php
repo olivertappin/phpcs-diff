@@ -16,17 +16,17 @@ class FileRuleTest extends TestBase
     {
         $rule = new FileRule();
 
-        $this->assertException(InvalidArgumentException::class, function() use ($rule) {
+        $this->assertException(InvalidArgumentException::class, function () use ($rule) {
             $rule(null);
         });
 
-        $this->assertException(RuntimeException::class, function() use ($rule) {
+        $this->assertException(RuntimeException::class, function () use ($rule) {
             $rule('');
         });
 
         mkdir('test');
 
-        $this->assertException(RuntimeException::class, function() use ($rule) {
+        $this->assertException(RuntimeException::class, function () use ($rule) {
             $rule('test');
         });
 
