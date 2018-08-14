@@ -1,5 +1,5 @@
 {
-    "name": "phpcs-diff",
+    "name": "olivertappin/phpcs-diff",
     "description": "Detects violations of a defined coding standard based on a git diff.",
     "require": {
         "squizlabs/php_codesniffer": "*",
@@ -18,6 +18,9 @@
             "PhpcsDiff\\Tests\\": "tests/"
         }
     },
+    "bin": [
+        "bin/phpcs-diff"
+    ],
     "scripts": {
         "test": "phpunit"
     }
