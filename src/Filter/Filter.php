@@ -57,10 +57,10 @@ class Filter
             foreach ($this->rules as $rule) {
                 try {
                     $rule($item);
+                    $this->filteredData[$key] = $item;
                 } catch (RuleException $exception) {
                     $this->contaminatedData[$key] = $item;
                 }
-                $this->filteredData[$key] = $item;
             }
         }
 

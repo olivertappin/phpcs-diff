@@ -211,7 +211,7 @@ class PhpcsDiff
     {
         // Get a list of changed files (not including deleted files)
         $output = shell_exec(
-            'git diff ' . $this->baseBranch . ' ' . $this->currentBranch. ' --name-only --diff-filter=d'
+            'git diff ' . $this->baseBranch . ' ' . $this->currentBranch . ' --name-only --diff-filter=d'
         );
 
         // Convert files into an array
