@@ -18,6 +18,9 @@
             "PhpcsDiff\\Tests\\": "tests/"
         }
     },
+    "bin": [
+        "bin/phpcs-diff"
+    ],
     "scripts": {
         "test": "phpunit"
     }
