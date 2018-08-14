@@ -1,3 +1,11 @@
+[![Latest Version](https://img.shields.io/github/tag/olivertappin/phpcs-diff.svg?style=flat&label=release)](https://github.com/olivertappin/phpcs-diff/tags)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
+[![Build Status](https://travis-ci.org/olivertappin/phpcs-diff.svg?branch=master)](https://travis-ci.org/olivertappin/phpcs-diff)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/olivertappin/phpcs-diff.svg?style=flat)](https://scrutinizer-ci.com/g/olivertappin/phpcs-diff/code-structure)
+[![Quality Score](https://img.shields.io/scrutinizer/g/olivertappin/phpcs-diff.svg?style=flat)](https://scrutinizer-ci.com/g/olivertappin/phpcs-diff)
+[![GitHub issues](https://img.shields.io/github/issues/olivertappin/phpcs-diff.svg)](https://github.com/olivertappin/phpcs-diff/issues)
+[![Total Downloads](https://img.shields.io/packagist/dt/olivertappin/phpcs-diff.svg?style=flat)](https://packagist.org/packages/olivertappin/phpcs-diff)
+
 ## About
 phpcs-diff detects violations of a defined set of coding standards based on a git diff. It uses phpcs from the [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) project.
 
