@@ -4,10 +4,12 @@
  * phpcs-diff detects violations of a defined coding standard based on a git diff.
  *
  * @author    Oliver Tappin <olivertappin@gmail.com>
- * @license   https://github.com/olivertappin/phpcs-diff/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/olivertappin/phpcs-diff/blob/master/LICENCE.md MIT Licence
  */
 
-if (is_file(__DIR__ . '/../autoload.php') === true) {
+if (is_file(__DIR__ . '/../../../autoload.php') === true) {
+    include_once __DIR__ . '/../../../autoload.php';
+} elseif (is_file(__DIR__ . '/../autoload.php') === true) {
     include_once __DIR__ . '/../autoload.php';
 } else {
     include_once 'vendor/autoload.php';
@@ -17,4 +19,5 @@ $climate = new League\CLImate\CLImate();
 
 $phpcsDiff = new PhpcsDiff\PhpcsDiff($argv, $climate);
 $phpcsDiff->run();
+
 exit($phpcsDiff->getExitCode());
