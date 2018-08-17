@@ -196,8 +196,16 @@ class PhpcsDiff
      */
     protected function runPhpcs(array $files = [], $ruleset = 'ruleset.xml')
     {
+        $exec = 'vendor/bin/phpcs';
+
+        if (is_file(__DIR__ . '/../../../bin/phpcs')) {
+            $exec = __DIR__ . '/../../../bin/phpcs';
+        } elseif (is_file(__DIR__ . '/../bin/phpcs')) {
+            $exec = realpath(__DIR__ . '/../bin/phpcs');
+        }
+
         return json_decode(
-            shell_exec('vendor/bin/phpcs --report=json --standard=' . $ruleset . ' ' . implode(' ', $files)),
+            shell_exec($exec . ' --report=json --standard=' . $ruleset . ' ' . implode(' ', $files)),
             true
         );
     }
