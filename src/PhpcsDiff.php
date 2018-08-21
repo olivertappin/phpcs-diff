@@ -199,7 +199,7 @@ class PhpcsDiff
         $exec = 'vendor/bin/phpcs';
 
         if (is_file(__DIR__ . '/../../../bin/phpcs')) {
-            $exec = __DIR__ . '/../../../bin/phpcs';
+            $exec = realpath(__DIR__ . '/../../../bin/phpcs');
         } elseif (is_file(__DIR__ . '/../bin/phpcs')) {
             $exec = realpath(__DIR__ . '/../bin/phpcs');
         }
