@@ -16,8 +16,8 @@ matrix:
   - php: nightly
 
 before_script:
-  - composer update 
+  - composer update --no-interaction
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --stop-on-failure
 

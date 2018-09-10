@@ -2,7 +2,7 @@
 
 namespace PhpcsDiff\Mapper;
 
-class PhpcsOutputMapper implements MapperInterface
+class PhpcsViolationsMapper implements MapperInterface
 {
     /**
      * @var array
