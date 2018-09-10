@@ -3,17 +3,17 @@
 namespace PhpcsDiff\Tests\Mapper;
 
 use PhpcsDiff\Mapper\MapperInterface;
-use PhpcsDiff\Mapper\PhpcsOutputMapper;
+use PhpcsDiff\Mapper\PhpcsViolationsMapper;
 use PhpcsDiff\Tests\TestBase;
 
-class PhpcsOutputMapperTest extends TestBase
+class PhpcsViolationsMapperTest extends TestBase
 {
     /**
      * @covers PhpcsOutputMapper::__construct
      */
     public function testMapperInstance()
     {
-        $mapper = new PhpcsOutputMapper([], '');
+        $mapper = new PhpcsViolationsMapper([], '');
 
         $this->assertInstanceOf(MapperInterface::class, $mapper);
     }
@@ -23,7 +23,7 @@ class PhpcsOutputMapperTest extends TestBase
      */
     public function testEmptyMapper()
     {
-        $mappedData = (new PhpcsOutputMapper([], ''))->map([]);
+        $mappedData = (new PhpcsViolationsMapper([], ''))->map([]);
 
         $this->assertEmpty($mappedData);
     }

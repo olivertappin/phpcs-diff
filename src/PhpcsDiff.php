@@ -7,7 +7,7 @@ use PhpcsDiff\Filter\Exception\FilterException;
 use PhpcsDiff\Filter\Filter;
 use PhpcsDiff\Filter\Rule\HasMessagesRule;
 use PhpcsDiff\Filter\Rule\PhpFileRule;
-use PhpcsDiff\Mapper\PhpcsOutputMapper;
+use PhpcsDiff\Mapper\PhpcsViolationsMapper;
 
 class PhpcsDiff
 {
@@ -168,7 +168,7 @@ class PhpcsDiff
             $this->climate->comment('Comparing phpcs output with changes lines from git diff.');
         }
 
-        $output = (new PhpcsOutputMapper(
+        $violations = (new PhpcsViolationsMapper(
             $changedLinesPerFile,
             getcwd()
         ))->map($files);
@@ -177,14 +177,12 @@ class PhpcsDiff
             $this->climate->comment('Preparing report.');
         }
 
-        if (empty($output)) {
+        if (empty($violations)) {
             $this->climate->info('No violations to report.');
             return;
         }
 
-        $this->climate->flank(strtoupper('Start of phpcs check'), '#', 10)->br();
-        $this->climate->out(implode(PHP_EOL, $output));
-        $this->climate->flank(strtoupper('End of phpcs check'), '#', 11);
+        $this->outputViolations($violations);
     }
 
     /**
@@ -208,6 +206,18 @@ class PhpcsDiff
             shell_exec($exec . ' --report=json --standard=' . $ruleset . ' ' . implode(' ', $files)),
             true
         );
+    }
+
+    /**
+     * @param array $output
+     */
+    protected function outputViolations(array $output)
+    {
+        $this->climate->flank(strtoupper('Start of phpcs check'), '#', 10)->br();
+        $this->climate->out(implode(PHP_EOL, $output));
+        $this->climate->flank(strtoupper('End of phpcs check'), '#', 11)->br();
+
+        $this->error('Violations have been reported.');
     }
 
     /**
