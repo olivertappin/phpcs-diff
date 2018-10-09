@@ -248,35 +248,32 @@ class PhpcsDiff
     protected function getChangedLinesPerFile(array $files)
     {
         $extract = [];
-        $pattern = '@@ -[0-9]+(?:,[0-9]+)? \+([0-9]+)(,([0-9]+))? @@';
+        $pattern = '@@ -[0-9]+(?:,[0-9]+)? \+([0-9]+)(?:,([0-9]+))? @@';
 
         foreach ($files as $file => $data) {
-            $lineDiff = shell_exec(
-                'git diff -U0 ' . $this->baseBranch . ' ' . $this->currentBranch . ' ' . $file .
-                ' | grep -E \'' . $pattern . '\''
-            );
-
+            $command = 'git diff -U0 ' . $this->baseBranch . ' ' . $this->currentBranch . ' ' . $file .
+                ' | grep -P ' . escapeshellarg($pattern);
+            $lineDiff = shell_exec($command);
             $lines = array_filter(explode(PHP_EOL, $lineDiff));
             $linesChanged = [];
 
             foreach ($lines as $line) {
                 preg_match('/' . $pattern . '/', $line, $matches);
-                $start = (int)$matches[1];
 
-                if (!isset($matches[2])) {
-                    // We only have a single line that was changed
-                    $linesChanged[] = $start;
-                    continue;
+                $start = $end = (int)$matches[1];
+
+                // Multiple lines were changed, so we need to calculate the end line
+                if (isset($matches[2])) {
+                    $length = (int)$matches[2];
+                    $end = $start + $length - 1;
                 }
 
-                // Multiple lines were changed, so we need to create a range
-                $length = (int)$matches[2];
-                $end = $start + $length;
-
-                array_merge($linesChanged, range($start, $end));
+                foreach (range($start, $end) as $l) {
+                    $linesChanged[$l] = null;
+                }
             }
 
-            $extract[$file] = $linesChanged;
+            $extract[$file] = array_keys($linesChanged);
         }
 
         return $extract;
