@@ -61,9 +61,11 @@ class PhpcsDiff
 
         $this->baseBranch = $this->getArgument(1, '');
         $this->currentBranch = $this->getArgument(2, '');
-        $this->climate->comment(
-            'Comparing branch: "' . $this->baseBranch . '" against: "' . $this->currentBranch . '"'
-        );
+        if ($this->isVerbose) {
+            $this->climate->comment(
+                'Comparing branch: "' . $this->baseBranch . '" against: "' . $this->currentBranch . '"'
+            );
+        }
     }
 
     protected function getArgument($index, $default = null)
@@ -253,17 +255,19 @@ class PhpcsDiff
     protected function getChangedLinesPerFile(array $files)
     {
         $extract = [];
-        $pattern = '@@ -[0-9]+(?:,[0-9]+)? \+([0-9]+)(?:,([0-9]+))? @@';
+        $pattern = '/@@ -[0-9]+(?:,[0-9]+)? \+([0-9]+)(?:,([0-9]+))? @@/';
 
         foreach ($files as $file => $data) {
-            $command = 'git diff -U0 ' . $this->baseBranch . ' ' . $this->currentBranch . ' ' . $file .
-                ' | grep -P ' . escapeshellarg($pattern);
-            $lineDiff = shell_exec($command);
-            $lines = array_filter(explode(PHP_EOL, $lineDiff));
+            $command = 'git diff -U0 ' . $this->baseBranch . ' ' . $this->currentBranch . ' ' . $file;
+            $output = shell_exec($command);
+            preg_match_all($pattern, $output, $lineDiff);
+            $lines = array_values($lineDiff[0]);
+
             $linesChanged = [];
 
             foreach ($lines as $line) {
-                preg_match('/' . $pattern . '/', $line, $matches);
+                preg_match($pattern, $line, $matches);
+
 
                 $start = $end = (int)$matches[1];
 
