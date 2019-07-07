@@ -19,24 +19,32 @@ This will hopefully put you in a position where your codebase will become more c
            phpcs-diff - detect violations based on a git diff
     
     SYNOPSIS
-           phpcs-diff [BASE_BRANCH]... [OPTION]...
+           phpcs-diff [-v] [--ruleset=PSR2] [BASE_BRANCH] [CURRENT_BRANCH]
     
     OPTIONS
            Here is a (very) short summary of the options available in phpcs-diff.
            
            -v
                   increase verbosity
+           --ruleset
+                  defines which php-cs ruleset to use (for example: PSR1, PSR12, ...)
                                    
 Basic example
 
 ```shell
-phpcs-diff develop -v
+phpcs-diff -v origin/develop develop
 ```
 
-Where the current branch you are on is the branch you are comparing with, and `develop` is the base branch. In this example, `phpcs-diff` would run the following diff statement:
+Where `origin/develop` is the base branch comparing with and `develop` is the current branch.
 
 ```shell
-git diff my-current-branch develop
+git diff origin/develop develop
+```
+
+You can check current unstaged files with:
+
+```shell
+phpcs-diff
 ```
 
 ## Installation
@@ -67,7 +75,7 @@ You can also download the `phpcs-diff` source and create a symlink to your `/usr
     git clone https://github.com/olivertappin/phpcs-diff.git
     ln -s phpcs-diff/bin/phpcs-diff /usr/bin/phpcs-diff
     cd /var/www/project
-    phpcs-diff master -v
+    phpcs-diff -v origin/master master
 
 ## Requirements
 
