@@ -11,6 +11,8 @@ use PhpcsDiff\Mapper\PhpcsViolationsMapper;
 
 class PhpcsDiff
 {
+    const DEFAULT_RULESET = 'ruleset.xml';
+
     /**
      * @var array
      */
@@ -55,18 +57,35 @@ class PhpcsDiff
             $this->isVerbose = true;
         }
 
-        if (!isset($this->argv[1])) {
-            $this->error('Please provide a <bold>base branch</bold> as the first argument.');
-            return;
+        $this->ruleset = $this->getOption('--ruleset', self::DEFAULT_RULESET);
+
+        $this->baseBranch = $this->getArgument(1, '');
+        $this->currentBranch = $this->getArgument(2, '');
+        $this->climate->comment(
+            'Comparing branch: "' . $this->baseBranch . '" against: "' . $this->currentBranch . '"'
+        );
+    }
+
+    protected function getArgument($index, $default = null)
+    {
+        $arguments = array_filter($this->argv, function ($val) {
+            return strpos($val, '-') === false;
+        });
+
+        return isset($arguments[$index]) ? $arguments[$index] : $default;
+    }
+
+    protected function getOption($name, $default = null)
+    {
+        foreach ($this->argv as $arg) {
+            list($flag, $val) = explode('=', $arg);
+
+            if ($flag == $name) {
+                return $val;
+            }
         }
 
-        $this->baseBranch = 'origin/' . str_replace('origin/', '', $this->argv[1]);
-        $this->currentBranch = trim(shell_exec('git rev-parse --verify HEAD'));
-
-        if (empty($this->currentBranch)) {
-            $this->error('Unable to get <bold>current</bold> branch.');
-            return;
-        }
+        return $default;
     }
 
     /**
@@ -75,19 +94,7 @@ class PhpcsDiff
      */
     protected function isFlagSet($flag)
     {
-        $isFlagSet = false;
-        $argv = $this->argv;
-
-        $key = array_search($flag, $argv, true);
-        if (false !== $key) {
-            unset($argv[$key]);
-            $argv = array_values($argv);
-
-            $isFlagSet = true;
-        }
-
-        $this->argv = $argv;
-        return $isFlagSet;
+        return in_array($flag, array_values($this->argv));
     }
 
     /**
@@ -112,7 +119,6 @@ class PhpcsDiff
 
     /**
      * @todo Automatically look at server envs for the travis base branch, if not provided?
-     * @todo Define custom ruleset from command line argv for runPhpcs()
      */
     public function run()
     {
@@ -133,12 +139,11 @@ class PhpcsDiff
         if ($this->isVerbose) {
             $fileDiffCount = count($fileDiff);
             $this->climate->comment(
-                'Checking ' . $fileDiffCount . ' ' .
-                ngettext('file', 'files', $fileDiffCount) . ' for violations.'
+                'Checking ' . $fileDiffCount . ' file(s) for violations.'
             );
         }
 
-        $phpcsOutput = $this->runPhpcs($fileDiff);
+        $phpcsOutput = $this->runPhpcs($fileDiff, $this->ruleset);
 
         if (is_null($phpcsOutput)) {
             $this->error('Unable to run phpcs executable.');
