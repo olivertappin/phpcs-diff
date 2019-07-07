@@ -61,10 +61,15 @@ class PhpcsDiff
 
         $this->baseBranch = $this->getArgument(1, '');
         $this->currentBranch = $this->getArgument(2, '');
+
         if ($this->isVerbose) {
-            $this->climate->comment(
-                'Comparing branch: "' . $this->baseBranch . '" against: "' . $this->currentBranch . '"'
-            );
+            if (!$this->baseBranch && !$this->currentBranch) {
+                $this->climate->comment("Comparing unstaged changes.");
+            } else {
+                $this->climate->comment(
+                    'Comparing branch: "' . $this->baseBranch . '" against: "' . $this->currentBranch . '"'
+                );
+            }
         }
     }
 
