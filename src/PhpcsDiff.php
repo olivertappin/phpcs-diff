@@ -59,8 +59,8 @@ class PhpcsDiff
 
         $this->ruleset = $this->getOption('--ruleset', self::DEFAULT_RULESET);
 
-        $this->baseBranch = $this->getArgument(1, '');
-        $this->currentBranch = $this->getArgument(2, '');
+        $this->baseBranch = $this->getArgument(0, '');
+        $this->currentBranch = $this->getArgument(1, '');
 
         if ($this->isVerbose) {
             if (!$this->baseBranch && !$this->currentBranch) {
@@ -78,6 +78,7 @@ class PhpcsDiff
         $arguments = array_filter($this->argv, function ($val) {
             return strpos($val, '-') === false;
         });
+        $arguments = array_values($arguments);
 
         return isset($arguments[$index]) ? $arguments[$index] : $default;
     }
