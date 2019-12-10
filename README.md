@@ -56,7 +56,7 @@ git diff my-current-branch develop
 
 _Please note:_
 - The `-v` flag is optional. This returns a verbose output during processing.
-- The `current-branch` parameter is optional. If this is not defined, phpcs-diff will use the current commit hash via `git rev-parse --verify HEAD`.
+- The `current-branch` parameter is optional. If this is not defined, `phpcs-diff` will use the current commit hash via `git rev-parse --verify HEAD`.
 - You must have a `ruleset.xml` defined in your project base directory.
 
 After running `phpcs-diff`, the executable will return an output similar to the following:
