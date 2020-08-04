@@ -248,17 +248,26 @@ class PhpcsDiff
     protected function getChangedLinesPerFile(array $files)
     {
         $extract = [];
-        $pattern = '@@ -[0-9]+(?:,[0-9]+)? \+([0-9]+)(?:,([0-9]+))? @@';
+        $pattern = [
+            'basic' => '^@@ (.*) @@',
+            'specific' => '@@ -[0-9]+(?:,[0-9]+)? \+([0-9]+)(?:,([0-9]+))? @@',
+        ];
 
         foreach ($files as $file => $data) {
             $command = 'git diff -U0 ' . $this->baseBranch . ' ' . $this->currentBranch . ' ' . $file .
-                ' | grep -P ' . escapeshellarg($pattern);
+                ' | grep -E ' . escapeshellarg($pattern['basic']);
+
             $lineDiff = shell_exec($command);
             $lines = array_filter(explode(PHP_EOL, $lineDiff));
             $linesChanged = [];
 
             foreach ($lines as $line) {
-                preg_match('/' . $pattern . '/', $line, $matches);
+                preg_match('/' . $pattern['specific'] . '/', $line, $matches);
+
+                // If there were no specific matches, skip this line
+                if ([] === $matches) {
+                    continue;
+                }
 
                 $start = $end = (int)$matches[1];
 
