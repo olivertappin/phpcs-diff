@@ -11,7 +11,7 @@ class PhpcsViolationsMapperTest extends TestBase
     /**
      * @covers PhpcsOutputMapper::__construct
      */
-    public function testMapperInstance()
+    public function testMapperInstance(): void
     {
         $mapper = new PhpcsViolationsMapper([], '');
 
@@ -21,7 +21,7 @@ class PhpcsViolationsMapperTest extends TestBase
     /**
      * @covers PhpcsOutputMapper::map
      */
-    public function testEmptyMapper()
+    public function testEmptyMapper(): void
     {
         $mappedData = (new PhpcsViolationsMapper([], ''))->map([]);
 

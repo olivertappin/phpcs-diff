@@ -2,6 +2,8 @@
 
 namespace PhpcsDiff\Tests\Filter\Rule;
 
+use PhpcsDiff\Filter\Rule\Exception\InvalidArgumentException;
+use PhpcsDiff\Filter\Rule\Exception\RuleException;
 use PhpcsDiff\Filter\Rule\FileRule;
 use PhpcsDiff\Filter\Rule\HasMessagesRule;
 use PhpcsDiff\Tests\TestBase;
@@ -10,48 +12,48 @@ class HasMessagesRuleTest extends TestBase
 {
     /**
      * @covers HasMessagesRule::__invoke
-     * @expectedException \PhpcsDiff\Filter\Rule\Exception\InvalidArgumentException
-     * @expectedException \PhpcsDiff\Filter\Rule\Exception\RuleException
-     * @expectedExceptionMessage The data argument provided has no messages.
-     * @throws \PhpcsDiff\Filter\Rule\Exception\RuleException
+     * @throws RuleException
      */
-    public function testNoMessages()
+    public function testNoMessages(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(RuleException::class);
+        $this->expectExceptionMessage("The data argument provided has no messages.");
         $rule = new HasMessagesRule();
         $rule([]);
     }
 
     /**
      * @covers HasMessagesRule::__invoke
-     * @expectedException \PhpcsDiff\Filter\Rule\Exception\InvalidArgumentException
-     * @expectedException \PhpcsDiff\Filter\Rule\Exception\RuleException
-     * @expectedExceptionMessage The data argument provided has no messages.
-     * @throws \PhpcsDiff\Filter\Rule\Exception\RuleException
+     * @throws RuleException
      */
-    public function testEmptyMessages()
+    public function testEmptyMessages(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(RuleException::class);
+        $this->expectExceptionMessage("The data argument provided has no messages.");
         $rule = new HasMessagesRule();
         $rule(['messages' => []]);
     }
 
     /**
      * @covers HasMessagesRule::__invoke
-     * @expectedException \PhpcsDiff\Filter\Rule\Exception\InvalidArgumentException
-     * @expectedException \PhpcsDiff\Filter\Rule\Exception\RuleException
-     * @expectedExceptionMessage The data argument provided has no messages.
-     * @throws \PhpcsDiff\Filter\Rule\Exception\RuleException
+     * @throws RuleException
      */
-    public function testNullMessages()
+    public function testNullMessages(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(RuleException::class);
+        $this->expectExceptionMessage("The data argument provided has no messages.");
         $rule = new HasMessagesRule();
         $rule(['messages' => null]);
     }
 
     /**
      * @covers FileRule::__invoke
-     * @throws \PhpcsDiff\Filter\Rule\Exception\RuleException
+     * @throws RuleException
      */
-    public function testMessages()
+    public function testMessages(): void
     {
         $rule = new HasMessagesRule();
         $actual = $rule(['messages' => ['message']]);
