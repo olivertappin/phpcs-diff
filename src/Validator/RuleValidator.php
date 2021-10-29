@@ -4,14 +4,14 @@ namespace PhpcsDiff\Validator;
 
 use PhpcsDiff\Filter\Rule\RuleInterface;
 use PhpcsDiff\Validator\Exception\InvalidArgumentException;
+use PhpcsDiff\Validator\Exception\ValidatorException;
 
 class RuleValidator extends AbstractValidator implements ValidatorInterface
 {
     /**
-     * @return mixed|void
-     * @throws \PhpcsDiff\Validator\Exception\ValidatorException
+     * @throws ValidatorException
      */
-    public function validate()
+    public function validate(): void
     {
         if (empty($this->data)) {
             throw new InvalidArgumentException('The data provided is empty.');

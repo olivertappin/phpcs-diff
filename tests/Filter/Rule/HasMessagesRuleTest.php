@@ -11,7 +11,7 @@ use PhpcsDiff\Tests\TestBase;
 class HasMessagesRuleTest extends TestBase
 {
     /**
-     * @covers HasMessagesRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\HasMessagesRule::__invoke
      * @throws RuleException
      */
     public function testNoMessages(): void
@@ -24,7 +24,7 @@ class HasMessagesRuleTest extends TestBase
     }
 
     /**
-     * @covers HasMessagesRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\HasMessagesRule::__invoke
      * @throws RuleException
      */
     public function testEmptyMessages(): void
@@ -37,7 +37,7 @@ class HasMessagesRuleTest extends TestBase
     }
 
     /**
-     * @covers HasMessagesRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\HasMessagesRule::__invoke
      * @throws RuleException
      */
     public function testNullMessages(): void
@@ -50,7 +50,7 @@ class HasMessagesRuleTest extends TestBase
     }
 
     /**
-     * @covers FileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\HasMessagesRule::__invoke
      * @throws RuleException
      */
     public function testMessages(): void

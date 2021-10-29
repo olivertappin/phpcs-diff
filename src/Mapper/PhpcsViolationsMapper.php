@@ -18,7 +18,7 @@ class PhpcsViolationsMapper implements MapperInterface
      * @param array $changedLinesPerFile
      * @param string $currentDirectory
      */
-    public function __construct(array $changedLinesPerFile, $currentDirectory)
+    public function __construct(array $changedLinesPerFile, string $currentDirectory)
     {
         $this->changedLinesPerFile = $changedLinesPerFile;
         $this->currentDirectory = $currentDirectory;
@@ -28,7 +28,7 @@ class PhpcsViolationsMapper implements MapperInterface
      * @param array $data
      * @return array
      */
-    public function map(array $data)
+    public function map(array $data): array
     {
         $mappedData = [];
 

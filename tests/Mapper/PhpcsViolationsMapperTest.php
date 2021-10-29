@@ -9,7 +9,7 @@ use PhpcsDiff\Tests\TestBase;
 class PhpcsViolationsMapperTest extends TestBase
 {
     /**
-     * @covers PhpcsOutputMapper::__construct
+     * @covers \PhpcsDiff\Mapper\PhpcsViolationsMapper::__construct
      */
     public function testMapperInstance(): void
     {
@@ -19,7 +19,8 @@ class PhpcsViolationsMapperTest extends TestBase
     }
 
     /**
-     * @covers PhpcsOutputMapper::map
+     * @covers \PhpcsDiff\Mapper\PhpcsViolationsMapper::__construct
+     * @covers \PhpcsDiff\Mapper\PhpcsViolationsMapper::map
      */
     public function testEmptyMapper(): void
     {

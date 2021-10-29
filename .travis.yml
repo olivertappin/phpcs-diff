@@ -15,7 +15,9 @@ matrix:
   - php: nightly
 
 before_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
   - composer update --no-interaction
 
 script:
-  - vendor/bin/phpunit --stop-on-failure
+  - XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-clover=coverage.clover --stop-on-failure
+  - if [ -f coverage.clover ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi;

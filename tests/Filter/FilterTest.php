@@ -102,7 +102,9 @@ class FilterTest extends TestBase
     }
 
     /**
-     * @covers Filter::__construct
+     * @covers \PhpcsDiff\Filter\Filter::__construct
+     * @covers \PhpcsDiff\Validator\AbstractValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
      * @throws FilterException
      */
     public function testInvalidRule(): void
@@ -122,7 +124,11 @@ class FilterTest extends TestBase
     }
 
     /**
-     * @covers Filter::filter
+     * @covers \PhpcsDiff\Filter\Filter::filter
+     * @covers \PhpcsDiff\Filter\Filter::__construct
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
+     * @covers \PhpcsDiff\Validator\AbstractValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
      * @throws FilterException
      */
     public function testFilterInstance(): void
@@ -142,10 +148,13 @@ class FilterTest extends TestBase
     }
 
     /**
-     * @covers Filter::__construct
-     * @covers Filter::filter
-     * @covers Filter::getFilteredData
-     * @covers Filter::getContaminatedData
+     * @covers \PhpcsDiff\Filter\Filter::__construct
+     * @covers \PhpcsDiff\Filter\Filter::filter
+     * @covers \PhpcsDiff\Filter\Filter::getFilteredData
+     * @covers \PhpcsDiff\Filter\Filter::getContaminatedData
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
+     * @covers \PhpcsDiff\Validator\AbstractValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
      * @dataProvider unfilteredDataProvider
      * @param array $unfilteredData
      * @param array $filteredData

@@ -34,7 +34,7 @@ class FileRuleTest extends TestBase
     }
 
     /**
-     * @covers FileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
      * @throws RuleException
      */
     public function testNonString()
@@ -47,7 +47,7 @@ class FileRuleTest extends TestBase
     }
 
     /**
-     * @covers FileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
      * @throws RuleException
      */
     public function testNonExistentFile()
@@ -60,7 +60,7 @@ class FileRuleTest extends TestBase
     }
 
     /**
-     * @covers FileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
      * @throws RuleException
      */
     public function testNonFile()
@@ -73,7 +73,7 @@ class FileRuleTest extends TestBase
     }
 
     /**
-     * @covers PhpFileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
      * @throws RuleException
      */
     public function testFile()

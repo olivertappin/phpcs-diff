@@ -13,7 +13,7 @@ use PhpcsDiff\Validator\RuleValidator;
 class RuleValidatorTest extends TestBase
 {
     /**
-     * @covers RuleValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::__construct
      */
     public function testRuleValidatorInstance(): void
     {
@@ -23,7 +23,8 @@ class RuleValidatorTest extends TestBase
     }
 
     /**
-     * @covers RuleValidator::validate
+     * @covers \PhpcsDiff\Validator\RuleValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
      */
     public function testEmptyRuleValidator(): void
     {
@@ -34,7 +35,8 @@ class RuleValidatorTest extends TestBase
     }
 
     /**
-     * @covers RuleValidator::validate
+     * @covers \PhpcsDiff\Validator\RuleValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
      */
     public function testNonArrayRuleValidator(): void
     {
@@ -45,16 +47,19 @@ class RuleValidatorTest extends TestBase
     }
 
     /**
-     * @covers RuleValidator::validate
+     * @covers \PhpcsDiff\Validator\RuleValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
+     * @throws ValidatorException
      */
     public function testRuleValidator(): void
     {
-        $actual = (new RuleValidator([
+        $this->expectNotToPerformAssertions();
+
+        // If this throws an exception, the test will fail
+        (new RuleValidator([
             new FileRule(),
             new PhpFileRule(),
             new HasMessagesRule(),
         ]))->validate();
-
-        $this->assertNull($actual);
     }
 }

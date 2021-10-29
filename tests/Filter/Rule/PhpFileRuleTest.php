@@ -42,7 +42,8 @@ class PhpFileRuleTest extends TestBase
     }
 
     /**
-     * @covers PhpFileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\PhpFileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
      * @throws RuleException
      */
     public function testNonPhpFile(): void
@@ -55,7 +56,8 @@ class PhpFileRuleTest extends TestBase
     }
 
     /**
-     * @covers PhpFileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\PhpFileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
      * @throws RuleException
      */
     public function testIncorrectMimeType(): void
@@ -68,7 +70,8 @@ class PhpFileRuleTest extends TestBase
     }
 
     /**
-     * @covers PhpFileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\PhpFileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
      * @throws RuleException
      */
     public function testPhpFile(): void
