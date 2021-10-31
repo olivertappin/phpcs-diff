@@ -65,7 +65,6 @@ class PhpcsDiff
 
         if (empty($this->currentBranch)) {
             $this->error('Unable to get <bold>current</bold> branch.');
-            return;
         }
     }
 
@@ -73,7 +72,7 @@ class PhpcsDiff
      * @param string $flag
      * @return bool
      */
-    protected function isFlagSet($flag)
+    protected function isFlagSet(string $flag)
     {
         $isFlagSet = false;
         $argv = $this->argv;
@@ -93,19 +92,15 @@ class PhpcsDiff
     /**
      * @param int $exitCode
      */
-    protected function setExitCode($exitCode)
+    protected function setExitCode(int $exitCode)
     {
-        if (!is_int($exitCode)) {
-            throw new \UnexpectedValueException('The exit code provided is not a valid integer.');
-        }
-
         $this->exitCode = $exitCode;
     }
 
     /**
      * @return int
      */
-    public function getExitCode()
+    public function getExitCode(): int
     {
         return $this->exitCode;
     }
@@ -114,7 +109,7 @@ class PhpcsDiff
      * @todo Automatically look at server envs for the travis base branch, if not provided?
      * @todo Define custom ruleset from command line argv for runPhpcs()
      */
-    public function run()
+    public function run(): void
     {
         try {
             $filter = new Filter([new PhpFileRule()], $this->getChangedFiles());
@@ -192,7 +187,7 @@ class PhpcsDiff
      * @param string $ruleset
      * @return mixed
      */
-    protected function runPhpcs(array $files = [], $ruleset = 'ruleset.xml')
+    protected function runPhpcs(array $files = [], string $ruleset = 'ruleset.xml')
     {
         $exec = 'vendor/bin/phpcs';
 
@@ -201,6 +196,8 @@ class PhpcsDiff
         } elseif (is_file(__DIR__ . '/../bin/phpcs')) {
             $exec = realpath(__DIR__ . '/../bin/phpcs');
         }
+
+        $exec = PHP_BINARY . ' ' . $exec;
 
         return json_decode(
             shell_exec($exec . ' --report=json --standard=' . $ruleset . ' ' . implode(' ', $files)),
@@ -211,7 +208,7 @@ class PhpcsDiff
     /**
      * @param array $output
      */
-    protected function outputViolations(array $output)
+    protected function outputViolations(array $output): void
     {
         $this->climate->flank(strtoupper('Start of phpcs check'), '#', 10)->br();
         $this->climate->out(implode(PHP_EOL, $output));
@@ -225,7 +222,7 @@ class PhpcsDiff
      *
      * @return array
      */
-    protected function getChangedFiles()
+    protected function getChangedFiles(): array
     {
         // Get a list of changed files (not including deleted files)
         $output = shell_exec(
@@ -245,7 +242,7 @@ class PhpcsDiff
      * @param array $files
      * @return array
      */
-    protected function getChangedLinesPerFile(array $files)
+    protected function getChangedLinesPerFile(array $files): array
     {
         $extract = [];
         $pattern = [
@@ -292,7 +289,7 @@ class PhpcsDiff
      * @param string $message
      * @param int $exitCode
      */
-    protected function error($message, $exitCode = 1)
+    protected function error(string $message, int $exitCode = 1): void
     {
         $this->climate->error($message);
         $this->setExitCode($exitCode);

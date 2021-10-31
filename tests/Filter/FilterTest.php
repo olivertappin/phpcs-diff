@@ -2,13 +2,15 @@
 
 namespace PhpcsDiff\Tests\Filter;
 
+use PhpcsDiff\Filter\Exception\FilterException;
+use PhpcsDiff\Filter\Exception\InvalidRuleException;
 use PhpcsDiff\Filter\Filter;
 use PhpcsDiff\Filter\Rule\FileRule;
 use PhpcsDiff\Tests\TestBase;
 
 class FilterTest extends TestBase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -21,7 +23,7 @@ class FilterTest extends TestBase
         fclose($handle);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -35,7 +37,7 @@ class FilterTest extends TestBase
     /**
      * @return array
      */
-    public function unfilteredDataProvider()
+    public function unfilteredDataProvider(): array
     {
         return [
             [
@@ -100,13 +102,15 @@ class FilterTest extends TestBase
     }
 
     /**
-     * @covers Filter::__construct
-     * @expectedException \PhpcsDiff\Filter\Exception\InvalidRuleException
-     * @expectedException \PhpcsDiff\Filter\Exception\FilterException
-     * @throws \PhpcsDiff\Filter\Exception\FilterException
+     * @covers \PhpcsDiff\Filter\Filter::__construct
+     * @covers \PhpcsDiff\Validator\AbstractValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
+     * @throws FilterException
      */
-    public function testInvalidRule()
+    public function testInvalidRule(): void
     {
+        $this->expectException(FilterException::class);
+        $this->expectException(InvalidRuleException::class);
         new Filter(
             [
                 new \stdClass(),
@@ -120,10 +124,14 @@ class FilterTest extends TestBase
     }
 
     /**
-     * @covers Filter::filter
-     * @throws \PhpcsDiff\Filter\Exception\FilterException
+     * @covers \PhpcsDiff\Filter\Filter::filter
+     * @covers \PhpcsDiff\Filter\Filter::__construct
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
+     * @covers \PhpcsDiff\Validator\AbstractValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
+     * @throws FilterException
      */
-    public function testFilterInstance()
+    public function testFilterInstance(): void
     {
         $filter = (new Filter(
             [
@@ -140,17 +148,20 @@ class FilterTest extends TestBase
     }
 
     /**
-     * @covers Filter::__construct
-     * @covers Filter::filter
-     * @covers Filter::getFilteredData
-     * @covers Filter::getContaminatedData
+     * @covers \PhpcsDiff\Filter\Filter::__construct
+     * @covers \PhpcsDiff\Filter\Filter::filter
+     * @covers \PhpcsDiff\Filter\Filter::getFilteredData
+     * @covers \PhpcsDiff\Filter\Filter::getContaminatedData
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
+     * @covers \PhpcsDiff\Validator\AbstractValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
      * @dataProvider unfilteredDataProvider
      * @param array $unfilteredData
      * @param array $filteredData
      * @param array $contaminatedData
-     * @throws \PhpcsDiff\Filter\Exception\FilterException
+     * @throws FilterException
      */
-    public function testFileFilter(array $unfilteredData, array $filteredData, array $contaminatedData)
+    public function testFileFilter(array $unfilteredData, array $filteredData, array $contaminatedData): void
     {
         $filter = (new Filter(
             [

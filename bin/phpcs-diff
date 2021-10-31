@@ -8,11 +8,18 @@
  */
 
 if (is_file(__DIR__ . '/../../../autoload.php')) {
-    include_once __DIR__ . '/../../../autoload.php';
+    $autoload = __DIR__ . '/../../../autoload.php';
 } elseif (is_file(__DIR__ . '/../autoload.php')) {
-    include_once __DIR__ . '/../autoload.php';
+    $autoload = __DIR__ . '/../autoload.php';
+} elseif (is_file(__DIR__ . '/../vendor/autoload.php')) {
+    $autoload = __DIR__ . '/../vendor/autoload.php';
+}
+
+if (isset($autoload)) {
+    require $autoload;
 } else {
-    include_once 'vendor/autoload.php';
+    echo 'Can not find autoloader, did you run composer? ' . __DIR__;
+    die(1);
 }
 
 $climate = new League\CLImate\CLImate();

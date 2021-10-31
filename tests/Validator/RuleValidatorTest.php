@@ -6,14 +6,16 @@ use PhpcsDiff\Filter\Rule\FileRule;
 use PhpcsDiff\Filter\Rule\HasMessagesRule;
 use PhpcsDiff\Filter\Rule\PhpFileRule;
 use PhpcsDiff\Tests\TestBase;
+use PhpcsDiff\Validator\Exception\InvalidArgumentException;
+use PhpcsDiff\Validator\Exception\ValidatorException;
 use PhpcsDiff\Validator\RuleValidator;
 
 class RuleValidatorTest extends TestBase
 {
     /**
-     * @covers RuleValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::__construct
      */
-    public function testRuleValidatorInstance()
+    public function testRuleValidatorInstance(): void
     {
         $actual = new RuleValidator([]);
 
@@ -21,38 +23,43 @@ class RuleValidatorTest extends TestBase
     }
 
     /**
-     * @covers RuleValidator::validate
-     * @expectedException \PhpcsDiff\Validator\Exception\InvalidArgumentException
-     * @expectedException \PhpcsDiff\Validator\Exception\ValidatorException
-     * @expectedExceptionMessage The data provided is empty.
+     * @covers \PhpcsDiff\Validator\RuleValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
      */
-    public function testEmptyRuleValidator()
+    public function testEmptyRuleValidator(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(ValidatorException::class);
+        $this->expectExceptionMessage("The data provided is empty.");
         (new RuleValidator([]))->validate();
     }
 
     /**
-     * @covers RuleValidator::validate
-     * @expectedException \PhpcsDiff\Validator\Exception\InvalidArgumentException
-     * @expectedException \PhpcsDiff\Validator\Exception\ValidatorException
-     * @expectedExceptionMessage The data provided is not an array.
+     * @covers \PhpcsDiff\Validator\RuleValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
      */
-    public function testNonArrayRuleValidator()
+    public function testNonArrayRuleValidator(): void
     {
+        $this->expectException(ValidatorException::class);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The data provided is not an array.');
         (new RuleValidator('string'))->validate();
     }
 
     /**
-     * @covers RuleValidator::validate
+     * @covers \PhpcsDiff\Validator\RuleValidator::__construct
+     * @covers \PhpcsDiff\Validator\RuleValidator::validate
+     * @throws ValidatorException
      */
-    public function testRuleValidator()
+    public function testRuleValidator(): void
     {
-        $actual = (new RuleValidator([
+        $this->expectNotToPerformAssertions();
+
+        // If this throws an exception, the test will fail
+        (new RuleValidator([
             new FileRule(),
             new PhpFileRule(),
             new HasMessagesRule(),
         ]))->validate();
-
-        $this->assertNull($actual);
     }
 }

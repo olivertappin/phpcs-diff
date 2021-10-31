@@ -3,12 +3,13 @@
 namespace PhpcsDiff\Filter\Rule;
 
 use PhpcsDiff\Filter\Rule\Exception\InvalidArgumentException;
+use PhpcsDiff\Filter\Rule\Exception\RuleException;
 
 class HasMessagesRule implements RuleInterface
 {
     /**
      * @param mixed $data
-     * @throws \PhpcsDiff\Filter\Rule\Exception\RuleException
+     * @throws RuleException
      */
     public function __invoke($data)
     {
