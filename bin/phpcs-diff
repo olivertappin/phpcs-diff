@@ -16,14 +16,11 @@ if (is_file(__DIR__ . '/../../../autoload.php')) {
 }
 
 if (isset($autoload)) {
-    echo 'Autoloader: ' . $autoload . PHP_EOL;
     require $autoload;
 } else {
     echo 'Can not find autoloader, did you run composer? ' . __DIR__;
     die(1);
 }
-
-echo PHP_BINARY . ': ' . phpversion() . PHP_EOL;
 
 $climate = new League\CLImate\CLImate();
 
