@@ -4,6 +4,7 @@
     "require": {
         "php": "^7.3 || ^8.0",
         "ext-json": "*",
+        "ext-gettext": "*",
         "squizlabs/php_codesniffer": "*",
         "league/climate": "^3.4"
     },
