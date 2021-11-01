@@ -39,7 +39,7 @@ class FileRuleTest extends TestBase
      */
     public function testNonString()
     {
-        $this->expectExceptionMessage("The data argument provided is not a string.");
+        $this->expectExceptionMessage('The data argument provided is not a string.');
         $this->expectException(RuleException::class);
         $this->expectException(InvalidArgumentException::class);
         $rule = new FileRule();
@@ -52,7 +52,7 @@ class FileRuleTest extends TestBase
      */
     public function testNonExistentFile()
     {
-        $this->expectExceptionMessage("The file provided does not exist.");
+        $this->expectExceptionMessage('The file provided does not exist.');
         $this->expectException(RuleException::class);
         $this->expectException(RuntimeException::class);
         $rule = new FileRule();
@@ -67,7 +67,7 @@ class FileRuleTest extends TestBase
     {
         $this->expectException(RuntimeException::class);
         $this->expectException(RuleException::class);
-        $this->expectExceptionMessage("The file provided is not a regular file.");
+        $this->expectExceptionMessage('The file provided is not a regular file.');
         $rule = new FileRule();
         $rule('test');
     }

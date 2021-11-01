@@ -30,7 +30,7 @@ class RuleValidatorTest extends TestBase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectException(ValidatorException::class);
-        $this->expectExceptionMessage("The data provided is empty.");
+        $this->expectExceptionMessage('The data provided is empty.');
         (new RuleValidator([]))->validate();
     }
 

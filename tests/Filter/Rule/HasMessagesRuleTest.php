@@ -4,7 +4,6 @@ namespace PhpcsDiff\Tests\Filter\Rule;
 
 use PhpcsDiff\Filter\Rule\Exception\InvalidArgumentException;
 use PhpcsDiff\Filter\Rule\Exception\RuleException;
-use PhpcsDiff\Filter\Rule\FileRule;
 use PhpcsDiff\Filter\Rule\HasMessagesRule;
 use PhpcsDiff\Tests\TestBase;
 
@@ -18,7 +17,7 @@ class HasMessagesRuleTest extends TestBase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectException(RuleException::class);
-        $this->expectExceptionMessage("The data argument provided has no messages.");
+        $this->expectExceptionMessage('The data argument provided has no messages.');
         $rule = new HasMessagesRule();
         $rule([]);
     }
@@ -31,7 +30,7 @@ class HasMessagesRuleTest extends TestBase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectException(RuleException::class);
-        $this->expectExceptionMessage("The data argument provided has no messages.");
+        $this->expectExceptionMessage('The data argument provided has no messages.');
         $rule = new HasMessagesRule();
         $rule(['messages' => []]);
     }
@@ -44,7 +43,7 @@ class HasMessagesRuleTest extends TestBase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectException(RuleException::class);
-        $this->expectExceptionMessage("The data argument provided has no messages.");
+        $this->expectExceptionMessage('The data argument provided has no messages.');
         $rule = new HasMessagesRule();
         $rule(['messages' => null]);
     }

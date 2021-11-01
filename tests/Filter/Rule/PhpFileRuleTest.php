@@ -50,7 +50,7 @@ class PhpFileRuleTest extends TestBase
     {
         $this->expectException(RuntimeException::class);
         $this->expectException(RuleException::class);
-        $this->expectExceptionMessage("The file provided does not have a .php extension.");
+        $this->expectExceptionMessage('The file provided does not have a .php extension.');
         $rule = new PhpFileRule();
         $rule('test.txt');
     }
@@ -64,7 +64,7 @@ class PhpFileRuleTest extends TestBase
     {
         $this->expectException(RuntimeException::class);
         $this->expectException(RuleException::class);
-        $this->expectExceptionMessage("The file provided does not have the text/x-php mime type.");
+        $this->expectExceptionMessage('The file provided does not have the text/x-php mime type.');
         $rule = new PhpFileRule();
         $rule('image.php');
     }
