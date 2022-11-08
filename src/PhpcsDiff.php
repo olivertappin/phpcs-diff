@@ -189,20 +189,49 @@ class PhpcsDiff
      */
     protected function runPhpcs(array $files = [], string $ruleset = 'ruleset.xml')
     {
-        $exec = 'vendor/bin/phpcs';
+        $exec = null;
+        $root = dirname(__DIR__);
 
-        if (is_file(__DIR__ . '/../../../bin/phpcs')) {
-            $exec = realpath(__DIR__ . '/../../../bin/phpcs');
-        } elseif (is_file(__DIR__ . '/../bin/phpcs')) {
-            $exec = realpath(__DIR__ . '/../bin/phpcs');
+        $locations = [
+            'vendor/bin/phpcs',
+            $root . '/../../bin/phpcs',
+            $root . '/../bin/phpcs',
+            $root . '/bin/phpcs',
+            $root . '/vendor/bin/phpcs',
+            '~/.config/composer/vendor/bin/phpcs',
+            '~/.composer/vendor/bin/phpcs',
+        ];
+
+        foreach ($locations as $location) {
+            if (is_file($location)) {
+                $exec = $location;
+                break;
+            }
+        }
+
+        if (!$exec) {
+            return null;
+        }
+
+        if ($this->isVerbose) {
+            $this->climate->info('Using phpcs executable: ' . $exec);
         }
 
         $exec = PHP_BINARY . ' ' . $exec;
+        $command = $exec . ' --report=json --standard=' . $ruleset . ' ' . implode(' ', $files);
+        $output = shell_exec($command);
 
-        return json_decode(
-            shell_exec($exec . ' --report=json --standard=' . $ruleset . ' ' . implode(' ', $files)),
-            true
-        );
+        if ($this->isVerbose) {
+            $this->climate->info('Running: ' . $command);
+        }
+
+
+        $json =  $output ? json_decode($output, true) : null;
+        if ($json === null && $output) {
+            $this->climate->error($output);
+        }
+
+        return $json;
     }
 
     /**
