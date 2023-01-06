@@ -225,8 +225,7 @@ class PhpcsDiff
             $this->climate->info('Running: ' . $command);
         }
 
-
-        $json =  $output ? json_decode($output, true) : null;
+        $json = $output ? json_decode($output, true) : null;
         if ($json === null && $output) {
             $this->climate->error($output);
         }
