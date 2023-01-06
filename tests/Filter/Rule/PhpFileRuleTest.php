@@ -2,6 +2,8 @@
 
 namespace PhpcsDiff\Tests\Filter\Rule;
 
+use PhpcsDiff\Filter\Rule\Exception\RuleException;
+use PhpcsDiff\Filter\Rule\Exception\RuntimeException;
 use PhpcsDiff\Filter\Rule\PhpFileRule;
 use PhpcsDiff\Tests\TestBase;
 
@@ -9,7 +11,7 @@ class PhpFileRuleTest extends TestBase
 {
     protected $handle;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -25,7 +27,7 @@ class PhpFileRuleTest extends TestBase
         fclose($handle);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -40,36 +42,39 @@ class PhpFileRuleTest extends TestBase
     }
 
     /**
-     * @covers PhpFileRule::__invoke
-     * @expectedException \PhpcsDiff\Filter\Rule\Exception\RuntimeException
-     * @expectedException \PhpcsDiff\Filter\Rule\Exception\RuleException
-     * @expectedExceptionMessage The file provided does not have a .php extension.
-     * @throws \PhpcsDiff\Filter\Rule\Exception\RuleException
+     * @covers \PhpcsDiff\Filter\Rule\PhpFileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
+     * @throws RuleException
      */
-    public function testNonPhpFile()
+    public function testNonPhpFile(): void
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectException(RuleException::class);
+        $this->expectExceptionMessage('The file provided does not have a .php extension.');
         $rule = new PhpFileRule();
         $rule('test.txt');
     }
 
     /**
-     * @covers PhpFileRule::__invoke
-     * @expectedException \PhpcsDiff\Filter\Rule\Exception\RuntimeException
-     * @expectedException \PhpcsDiff\Filter\Rule\Exception\RuleException
-     * @expectedExceptionMessage The file provided does not have the text/x-php mime type.
-     * @throws \PhpcsDiff\Filter\Rule\Exception\RuleException
+     * @covers \PhpcsDiff\Filter\Rule\PhpFileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
+     * @throws RuleException
      */
-    public function testIncorrectMimeType()
+    public function testIncorrectMimeType(): void
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectException(RuleException::class);
+        $this->expectExceptionMessage('The file provided does not have the text/x-php mime type.');
         $rule = new PhpFileRule();
         $rule('image.php');
     }
 
     /**
-     * @covers PhpFileRule::__invoke
-     * @throws \PhpcsDiff\Filter\Rule\Exception\RuleException
+     * @covers \PhpcsDiff\Filter\Rule\PhpFileRule::__invoke
+     * @covers \PhpcsDiff\Filter\Rule\FileRule::__invoke
+     * @throws RuleException
      */
-    public function testPhpFile()
+    public function testPhpFile(): void
     {
         $rule = new PhpFileRule();
         $actual = $rule('test.php');

@@ -2,13 +2,14 @@
 
 namespace PhpcsDiff\Filter\Rule;
 
+use PhpcsDiff\Filter\Rule\Exception\RuleException;
 use PhpcsDiff\Filter\Rule\Exception\RuntimeException;
 
 class PhpFileRule extends FileRule
 {
     /**
      * @param mixed $data
-     * @throws \PhpcsDiff\Filter\Rule\Exception\RuleException
+     * @throws RuleException
      */
     public function __invoke($data)
     {

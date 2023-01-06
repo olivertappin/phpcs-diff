@@ -51,7 +51,7 @@ class Filter
     /**
      * @return $this
      */
-    public function filter()
+    public function filter(): Filter
     {
         foreach ($this->unfilteredData as $key => $item) {
             foreach ($this->rules as $rule) {
@@ -70,7 +70,7 @@ class Filter
     /**
      * @return array
      */
-    public function getFilteredData()
+    public function getFilteredData(): array
     {
         return $this->filteredData;
     }
@@ -78,7 +78,7 @@ class Filter
     /**
      * @return array
      */
-    public function getContaminatedData()
+    public function getContaminatedData(): array
     {
         return $this->contaminatedData;
     }
