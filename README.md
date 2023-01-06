@@ -24,7 +24,7 @@ Alternatively, you can manually include a dependency for `olivertappin/phpcs-dif
 ```json
 {
     "require-dev": {
-        "olivertappin/phpcs-diff": "^1.0"
+        "olivertappin/phpcs-diff": "^2.0"
     }
 }
 ```
