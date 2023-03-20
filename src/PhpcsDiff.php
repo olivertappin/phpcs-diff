@@ -97,9 +97,10 @@ class PhpcsDiff
             }
         }
 
-        $argv = array_values($argv);
+        if ($return) {
+            $this->argv = array_values($argv);
+        }
 
-        $this->argv = $argv;
         return $return;
     }
 
