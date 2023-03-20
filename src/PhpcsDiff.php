@@ -94,6 +94,8 @@ class PhpcsDiff
                 $return = !empty(strrchr($arg, '=')) ? substr(strrchr($arg, '='), 1) : true;
 
                 unset($argv[$key]);
+
+                break;
             }
         }
 
