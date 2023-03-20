@@ -94,9 +94,10 @@ class PhpcsDiff
                 $return = !empty(strrchr($arg, '=')) ? substr(strrchr($arg, '='), 1) : true;
 
                 unset($argv[$key]);
-                $argv = array_values($argv);
             }
         }
+
+        $argv = array_values($argv);
 
         $this->argv = $argv;
         return $return;
